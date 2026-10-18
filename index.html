@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        <meta charset="UFT-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>게임 이벤트 일람</title>
 
@@ -37,22 +37,34 @@
 
             <section id="features">
                 <h2>게임들의 이벤트 보기 기능 소개</h2>
-                <ul class="features-list">
-                    <li class="features-card">
-                        <h3>진행중인 이벤트</h3>
-                        <p>진쟁중인 이벤트 확인이 가능합니다.</p>
-                    </li>
+                <div class="tabs" role="tablist" aria-label="기능 선택">
+                    <button id="tab-progress" class="tab is-active" role="tab" aria-selected="true" aria-controls="feature-progress" data-target="#feature-progress">
+                        진행 중인 이벤트
+                    </button>
 
-                    <li class="features-card">
-                        <h3>진행 예정 이벤트</h3>
-                        <p>진쟁 예정인 이벤트 확인이 가능합니다.</p>
-                    </li>
+                    <button id="tab-scheduled" class="tab" role="tab" aria-selected="false" aria-controls="feature-scheduled" data-target="#feature-scheduled">
+                        진행 예정 이벤트
+                    </button>
 
-                    <li class="features-card">
-                        <h3>종료된 이벤트</h3>
-                        <p>종료된 이벤트 확인이 가능합니다.</p>
-                    </li>
-                </ul>
+                    <button id="tab-done" class="tab" role="tab" aria-selected="false" aria-controls="feature-done" data-target="#feature-done">
+                        종료된 이벤트
+                    </button>
+                </div>
+
+                <div id="feature-progress" class="panel is-active" role="tabpanel" aria-labelledby="tab-progress">
+                    <h3>진행 중인 이벤트</h3>
+                    <p>진행 중인 이벤트를 확인 할 수 있습니다.</p>
+                </div>
+
+                <div id="feature-scheduled" class="panel" role="tabpanel" aria-labelledby="tab-scheduled" hidden>
+                    <h3>진행 예정 이벤트</h3>
+                    <p>진행 예정인 이벤트를 확인 할 수 있습니다.</p>
+                </div>
+
+                <div id="feature-done" class="panel" role="tabpanel" aria-labelledby="tab-done" hidden>
+                    <h3>종료된 이벤트</h3>
+                    <p>종료된 이벤트를 확인 할 수 있습니다.</p>
+                </div>
             </section>
 
             <section id="steps">
@@ -62,6 +74,38 @@
                     <li>원하는 게임 선택</li>
                     <li>진행중인 이벤트 확인</li>
                 </ol>
+            </section>
+
+            <section id="event-practice">
+                <h2>이벤트 안내 설정</h2>
+
+                <div class="event-grid">
+                    <article class="event-card">
+                        <h3>화면 테마</h3>
+                        <button id="themeButton" type="button">타크 테마로 바꾸기</button>
+                    </article>
+
+                    <article class="event-card">
+                        <h3>닉네임 입력</h3>
+                        <label for="nickname">닉네임</label>
+                        <input type="text" id="nickname" maxlength="10">
+                        <p id="nicknameCount" aria-live="polite">0 / 10</p>
+                    </article>
+
+                    <article class="event-card">
+                        <h3>개인 정보 수집 동의</h3>
+                        <label class="agree-row">
+                            <input type="checkbox" id="agreeCheck">
+                            이벤트 안내를 위한 개인 정보 수집에 동의합니다.
+                        </label>
+                        <p id="agreeMessage" aria-live="polite">
+                            동의 후 서비스를 이용할 수 있습니다.
+                        </p>
+                        <button id="startButton" type="button" disabled>
+                            안내 받기
+                        </button>
+                    </article>
+                </div>
             </section>
 
             <section id="subscribe" class="subscribe-card">

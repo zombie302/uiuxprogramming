@@ -65,7 +65,7 @@ function handleAgreeChange(){
     const agreed = agreeCheck.checked;
 
     startButton.disabled = !agreed;
-    agreeMessage.textContent = agreed ? "알림을 받을 수 있습니다." : "동의 후 알림을 받을 수 있습니다.";
+    agreeMessage.textContent = agreed ? "알림 설정을 시작할 수 있습니다." : "동의 후 알림을 설정을 시작할 수 있습니다.";
     if(agreed){
         agreeMessage.classList.add("is-ready");
     } else {
@@ -107,4 +107,131 @@ function handleTabClick(event){
 
 tabs.forEach(function (tab){
     tab.addEventListener("click", handleTabClick);
+});
+
+const eventFlow = document.querySelector("#event-noti-flow");
+const flowSteps = eventFlow.querySelectorAll(".step");
+const progressItems = eventFlow.querySelectorAll(".progress__item");
+const titleInput = document.querySelector("#game-title");
+const titleError = document.querySelector("#title-error");
+const titleNext = document.querySelector("#title-next");
+const durationRange = document.querySelector("#duration-range");
+const durationValue = document.querySelector("#duration-value");
+const timingOption = document.querySelector("#timing-option");
+const timingOptions = document.querySelector("#timing-options");
+const optionPrev = document.querySelector("#option-prev");
+const optionNext = document.querySelector("#option-next");
+const summaryPrev = document.querySelector("#summary-prev");
+const finishButton = document.querySelector("#finish-button");
+const restartButon = document.querySelector("#restart-button");
+const summaryTitle = document.querySelector("#summary-title");
+const summaryDuration = document.querySelector("#summary-duration");
+const summaryTiming = document.querySelector("#summary-timing");
+const range = (n) => Array.from({length:n}, (_, i) => i+1);
+//Array [1, 2, .... 24]
+const duartionValues = range(24);
+
+const formData = {
+    title:"", 
+    duration: "5", 
+    timing: false, 
+    timingValue: "이벤트 시작 전"
+};
+
+function showStep(index) {
+    flowSteps.forEach((step, i) => {step.hidden = i != index; });
+    progressItems.forEach((item, i) => {
+        item.classList.toggle("is-active", i === index);
+    });
+}
+
+const emailDialog = document.querySelector("#email-dialog");
+const emailCancel = document.querySelector("#email-cancel");
+const emailConfirm = document.querySelector("#email-confirm");
+
+function revokeEamilAgreement() {
+    agreeCheck.checked = false;
+    eventFlow.hidden = true;
+    handleAgreeChange();
+    agreeCheck.focus();
+}
+
+startButton.addEventListener("click", () => {
+    if(!agreeCheck.checked) return;
+    emailDialog.showModal();
+});
+
+emailCancel.addEventListener("click", () =>{
+    emailDialog.close();
+    revokeEamilAgreement();
+});
+
+emailDialog.addEventListener("cancel", revokeEamilAgreement);
+emailConfirm.addEventListener("click", () => {
+    if(!agreeCheck.checked) return;
+    emailDialog.close();
+    eventFlow.hidden = false;
+    showStep(0);
+    eventFlow.scrollIntoView({behavior: "smooth"});
+    titleInput.focus();
+});
+
+function validateTitle() {
+    const value = titleInput.value.trim();
+    if(!value){
+        titleError.textContent = "게임의 이름을 입력해주세요";
+        titleInput.classList.add("has-error");
+        titleInput.focus();
+        return false;
+    }
+    titleError.textContent = "";
+    titleInput.classList.remove("has-error");
+    formData.title = value;
+    return true;
+}
+
+titleNext.addEventListener("click", () => {
+    if(!validateTitle()) return;
+    showStep(1);
+});
+
+durationRange.addEventListener("input", () => {
+    durationValue.value = duartionValues[durationRange.value] + "시";
+});
+
+timingOption.addEventListener("change", () => {
+    timingOptions.hidden = !timingOption.checked;
+});
+
+optionPrev.addEventListener("click", () => {showStep(0)});
+optionNext.addEventListener("click", () => {
+    formData.duration = duartionValues[durationRange.value];
+    formData.timing = timingOption.checked;
+    const count = document.querySelector('input[name="timing"]:checked');
+    formData.timingValue = count.value;
+    summaryTitle.textContent = formData.title;
+    summaryDuration.textContent = formData.duration + "시";
+    summaryTiming.textContent = formData.timing ? formData.timingValue + "" : "미포함";
+    showStep(2);
+});
+
+summaryPrev.addEventListener("click", () => {showStep(1)});
+finishButton.addEventListener("click", () => {showStep(3)});
+restartButon.addEventListener("click", () => {
+    formData.title = "";
+    formData.duration = "5";
+    formData.timing = false;
+    formData.timingValue = "이벤트 시작 전";
+    titleInput.value = "";
+    titleError.textContent = "";
+    titleInput.classList.remove("has-error");
+    durationRange.value = "13";
+    durationValue.value = "13시";
+    timingOption.checked = false;
+    timingOptions.hidden = true;
+    document.querySelector('input[name="timing"][value="이벤트 시작 전"]').checked = true;
+    summaryTitle.textContent = "";
+    summaryDuration.textContent = "";
+    summaryTiming.textContent = "";
+    showStep(0);
 });

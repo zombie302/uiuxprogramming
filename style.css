@@ -296,6 +296,71 @@ body.dark .panel{
     border-color: #50515f;
 }
 
+#email-dialog{
+    width: min(520px, calc(100% - 32px));
+    max-width: none;
+    padding: 24px;
+    border: 1px solid #deddea; 
+    border-radius: 12px;
+    background-color: #ffffff;
+    color: #27232c;
+}
+
+#email-dialog::backdrop{background: rgba(30, 20, 30, .6);}
+#email-dialog .dialog-actions {display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;}
+#email-dialog button {min-height: 44px;}
+body.dark #recording-dialog {background: #50515f; color: #ffffff;}
+
+.event-noti-flow{
+    padding: 24px;
+    border: 1px solid #deddea;
+    border-radius: 24px;
+    background-color: #ffffff;
+}
+
+.event-noti-flow[hidden],
+.event-noti-flow .step[hidden],
+.event-noti-flow fieldset[hidden] {display: none;}
+.event-noti-flow .progress {display: flex; flex-wrap: wrap; gap: 12px;}
+.event-noti-flow .progress__item.is-active{
+    color: #635bff;
+    font-weight: 800;
+}
+
+.event-noti-flow .error-message{
+    min-height: 24px;
+    color: #9d243d;
+    font-weight: 700;
+}
+
+.event-noti-flow #game-title.has-error{border-color: #9d243d;}
+.event-noti-flow #duration-range{width: 100%; accent-color: #635bff;}
+.event-noti-flow input[type="checkbox"],
+.event-noti-flow input[type="radio"]{
+    flex: 0 0 auto;
+    width: auto;
+    accent-color: #635bff;
+}
+
+.event-noti-flow .summary-list > div {
+    display: flex;
+    justify-content:  space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid #deddea;
+}
+
+.event-noti-flow .step-actions{
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+body.dark .event-noti-flow{
+    background-color: #50515f;
+    border-color: #2d2e38;
+}
+
 /* 웹페이지 가로 폭이 768px 이하 일 때 */
 @media (max-width: 768px){
     body{
@@ -360,4 +425,12 @@ body.dark .panel{
         width: 100%;
         text-align: left;
     }
+
+    .event-noti-flow {padding: 20px;}
+    #email-dialog .dialog-actions {flex-direction: column-reverse;}
+    #email-dialog .dialog-actions button{width: 100%;}
+    .event-noti-flow .step-actions {flex-direction: column-reverse;}
+    .event-noti-flow .step-actions button{width: 100%;}
+    .event-noti-flow input[type="checkbox"],
+    event-noti-flow input[type="radio"] {width: auto;}
 }

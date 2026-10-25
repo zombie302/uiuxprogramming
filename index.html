@@ -102,10 +102,73 @@
                             동의 후 서비스를 이용할 수 있습니다.
                         </p>
                         <button id="startButton" type="button" disabled>
-                            안내 받기
+                            알림 설정 시작 하기
                         </button>
                     </article>
                 </div>
+            </section>
+
+            <dialog id="email-dialog" aria-labelledby="email-title" aria-describedby="email-dexcription">
+                <h2 id="email-title">이메일 활용 안내</h2>
+                <p id="email-dexcription">이메일을 이벤트 안내에 사용합니다. </p>
+                <div class="dialog-actions">
+                    <button id="email-cancel" type="button">돌아가기</button>
+                    <button id="email-confirm" type="button">알림 받기</button>
+                </div>
+            </dialog>
+
+            <section id="event-noti-flow" class="event-noti-flow" hidden>
+                <h2>이벤트 알림 설정</h2>
+                <p class="progress" aria-label="설정 진행 단계">
+                    <span class="progress_item">1. 정보</span>
+                    <span class="progress_item">2. 조건</span>
+                    <span class="progress_item">3. 확인</span>
+                </p>
+
+                <section class="step" data-step="1" hidden>
+                    <h3>게임의 이름을 입력해주세요</h3>
+                    <label for="game-title">게임 제목</label>
+                    <input id="game-title" type="text" placeholder="예: 프로젝트 세카이" aria-describedby="title-error">
+                    <p id="title-error" class="error-message" aria-live="polite"></p>
+                    <button id="title-next" type="button">알림 설정하기</button>
+                </section>
+
+                <section class="step" data-step="2" hidden>
+                    <h3>알림을 받을 시간을 선택해 주세요.</h3>
+                    <label for="duration-range">알림 시간</label>
+                    <input id="duration-range" type="range" min="0" max="23" step="1" value="13">
+                    <output id="duration-value" for="duration-range">13시</output>
+                    <label><input type="checkbox" id="timing-option">이벤트 알림 시점 설정</label>
+                    <fieldset id="timing-options" hidden>
+                        <legend>이벤트 시점</legend>
+                        <label><input type="radio" name="timing" value="이벤트 시작 전" checked>이벤트 시작 전</label>
+                        <label><input type="radio" name="timing" value="이벤트 종료 전">이벤트 종료 전</label>
+                    </fieldset>
+                    <div class="step-actions">
+                        <button id="option-prev" type="button">이전</button>
+                        <button id="option-next" type="button">내용 확인하기</button>
+                    </div>
+                </section>
+
+                <section class="step" data-step="3" hidden>
+                    <h3>입력한 내용을 확인해 주세요.</h3>
+                    <div class="summary-list">
+                        <div><span>게임 제목</span><strong id="summary-title"></strong></div>
+                        <div><span>알림 시간</span><strong id="summary-duration"></strong></div>
+                        <div><span>일림 시점</span><strong id="summary-timing"></strong></div>
+                    </div>
+                    <div class="step-actions">
+                        <button id="summary-prev" type="button">수정하기</button>
+                        <button id="finish-button" type="button">설정 완료하기</button>
+                    </div>
+                </section>
+
+                <section class="step complete-step" data-step="4" hidden>
+                    <h3>알림 설정이 완료되었습니다.</h3>
+                    <p>설정한 내용을 확인했습니다. 필요하면 다시 설정할 수 있습니다.</p>
+                    <button id="restart-button" type="button">다시 설정하기</button>
+                </section>
+
             </section>
 
             <section id="subscribe" class="subscribe-card">

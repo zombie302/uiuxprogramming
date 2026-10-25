@@ -127,15 +127,23 @@ const restartButon = document.querySelector("#restart-button");
 const summaryTitle = document.querySelector("#summary-title");
 const summaryDuration = document.querySelector("#summary-duration");
 const summaryTiming = document.querySelector("#summary-timing");
+const summaryEmail = document.querySelector("#summary-email");
+const emailInputOption = document.querySelector("#email-input");
+const emailError = document.querySelector("#email-error");
+const emailMessage = document.querySelector("#emailMessage");
+const emailPrev = document.querySelector("#email-prev");
+const emailNext = document.querySelector("#email-next");
+
 const range = (n) => Array.from({length:n}, (_, i) => i+1);
 //Array [1, 2, .... 24]
 const duartionValues = range(24);
 
 const formData = {
     title:"", 
-    duration: "5", 
+    duration: "13", 
     timing: false, 
-    timingValue: "이벤트 시작 전"
+    timingValue: "이벤트 시작 전",
+    email : ""
 };
 
 function showStep(index) {
@@ -190,6 +198,20 @@ function validateTitle() {
     return true;
 }
 
+function validateEmail() {
+    const value = emailInputOption.value.trim();
+    if(!value){
+        emailError.textContent = "이메일을 입력해주세요";
+        emailInputOption.classList.add("has-error");
+        emailInputOption.focus();
+        return false;
+    }
+    emailError.textContent = "";
+    emailInputOption.classList.remove("has-error");
+    formData.email = value;
+    return true;
+}
+
 titleNext.addEventListener("click", () => {
     if(!validateTitle()) return;
     showStep(1);
@@ -203,25 +225,37 @@ timingOption.addEventListener("change", () => {
     timingOptions.hidden = !timingOption.checked;
 });
 
+emailPrev.addEventListener("click", () => {showStep(1)});
+emailNext.addEventListener("click", () => {
+    if(!validateEmail()) return;
+    setSummary();
+    showStep(3);
+});
+
 optionPrev.addEventListener("click", () => {showStep(0)});
 optionNext.addEventListener("click", () => {
     formData.duration = duartionValues[durationRange.value];
     formData.timing = timingOption.checked;
     const count = document.querySelector('input[name="timing"]:checked');
     formData.timingValue = count.value;
-    summaryTitle.textContent = formData.title;
-    summaryDuration.textContent = formData.duration + "시";
-    summaryTiming.textContent = formData.timing ? formData.timingValue + "" : "미포함";
     showStep(2);
 });
 
-summaryPrev.addEventListener("click", () => {showStep(1)});
-finishButton.addEventListener("click", () => {showStep(3)});
+function setSummary(){
+    summaryTitle.textContent = formData.title;
+    summaryDuration.textContent = formData.duration + "시";
+    summaryTiming.textContent = formData.timing ? formData.timingValue + "" : "미포함";
+    summaryEmail.textContent = formData.email;
+}
+
+summaryPrev.addEventListener("click", () => {showStep(0)});
+finishButton.addEventListener("click", () => {showStep(4)});
 restartButon.addEventListener("click", () => {
     formData.title = "";
-    formData.duration = "5";
+    formData.duration = "13";
     formData.timing = false;
     formData.timingValue = "이벤트 시작 전";
+    formData.email = "";
     titleInput.value = "";
     titleError.textContent = "";
     titleInput.classList.remove("has-error");
@@ -233,5 +267,6 @@ restartButon.addEventListener("click", () => {
     summaryTitle.textContent = "";
     summaryDuration.textContent = "";
     summaryTiming.textContent = "";
+    summaryEmail.textContent = "";
     showStep(0);
 });

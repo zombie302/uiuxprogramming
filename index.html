@@ -82,7 +82,7 @@
                 <div class="event-grid">
                     <article class="event-card">
                         <h3>화면 테마</h3>
-                        <button id="themeButton" type="button">타크 테마로 바꾸기</button>
+                        <button id="themeButton" type="button">다크 테마로 바꾸기</button>
                     </article>
 
                     <article class="event-card">
@@ -146,16 +146,28 @@
                     </fieldset>
                     <div class="step-actions">
                         <button id="option-prev" type="button">이전</button>
-                        <button id="option-next" type="button">내용 확인하기</button>
+                        <button id="option-next" type="button">다음</button>
                     </div>
                 </section>
 
                 <section class="step" data-step="3" hidden>
+                    <h3>알림을 받을 이메일을 작성하세요.</h3>
+                    <label for="email">이메일</label>
+                    <input id="email-input" type="email" placeholder="ex : aaa@google.com">
+                    <p id="email-error" class="error-message" aria-live="polite"></p>
+                    <div class="step-actions">
+                        <button id="email-prev" type="button">이전</button>
+                        <button id="email-next" type="button">내용 확인하기</button>
+                    </div>
+                </section>
+
+                <section class="step" data-step="4" hidden>
                     <h3>입력한 내용을 확인해 주세요.</h3>
                     <div class="summary-list">
                         <div><span>게임 제목</span><strong id="summary-title"></strong></div>
                         <div><span>알림 시간</span><strong id="summary-duration"></strong></div>
                         <div><span>일림 시점</span><strong id="summary-timing"></strong></div>
+                        <div><span>받을 메일</span><strong id="summary-email"></strong></div>
                     </div>
                     <div class="step-actions">
                         <button id="summary-prev" type="button">수정하기</button>
@@ -163,7 +175,7 @@
                     </div>
                 </section>
 
-                <section class="step complete-step" data-step="4" hidden>
+                <section class="step complete-step" data-step="5" hidden>
                     <h3>알림 설정이 완료되었습니다.</h3>
                     <p>설정한 내용을 확인했습니다. 필요하면 다시 설정할 수 있습니다.</p>
                     <button id="restart-button" type="button">다시 설정하기</button>
@@ -172,11 +184,11 @@
             </section>
 
             <section id="subscribe" class="subscribe-card">
-                <h2>이벤트 소식 받기</h2>
+                <h2>문의 하기</h2>
                 <form id="subscribe-form">
                     <label for="email">이메일</label>
                     <input type="email" id="email" name="email">
-                    <button id="subscribeBtn" type="submit">소식 받기</button>
+                    <button id="subscribeBtn" type="submit">문의 하기</button>
                 </form>
                 <p id="subscribeMessage" aria-live="polite">이메일을 입력한 뒤 신청해주세요.</p>
             </section>
